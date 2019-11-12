@@ -30,7 +30,7 @@ int main() {
     while(!GetAsyncKeyState('Q')) {
 
 
-        if (counter % 20 == 0) {
+        if (counter % 2 == 0) {
             if (GetAsyncKeyState(VK_UP)) {
                 pong.mvP2(1);
             } else if (GetAsyncKeyState(VK_DOWN)) {
@@ -38,13 +38,13 @@ int main() {
             }
         }
 
-        // if (GetAsyncKeyState('W')) {
-        //     pong.mvP1(1);
-        // } else if (GetAsyncKeyState('S')) {
-        //     pong.mvP1(0);
-        // }
-        if (counter % 30 == 0) {
-            pong.mvP1();
+        if (GetAsyncKeyState('W')) {
+            pong.mvP1(1);
+        } else if (GetAsyncKeyState('S')) {
+            pong.mvP1(0);
+        }
+        if (counter % 4 == 0) {
+            // pong.mvP1();
             pong.game();
         }
         counter ++;

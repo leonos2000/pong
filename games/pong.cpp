@@ -76,7 +76,13 @@ void Pong::mvBall() {
             mvBally = -1;
             break;
         case 3:
-            mvBallx = 1;
+            if (p1.p1.y <= ball.y && p1.p2.y >= ball.y ) {
+                mvBallx = 1;
+            } else {
+                renderString(Point(10, 10), "TESTOWY\nSTRING\nOK?");
+                display();
+                while(1);
+            }
             break;
         case 4:
             if (p2.p1.y <= ball.y && p2.p2.y >= ball.y ) {
