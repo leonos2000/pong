@@ -57,7 +57,7 @@ void Pong::mvP1(bool upDown) {
 void Pong::mvP1() {
     p1.safeTranslation(0, ball.y - (p1.p2.y - p1.p1.y) - p1.p1.y, gameBox);
 }
-
+ 
 void Pong::mvP2(bool upDown) {
     if (upDown) {
         if (p2.p1.y - 1 >= 0)

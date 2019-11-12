@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <windows.h>
+#include <ctime>
 
 #include "terminalRenderer.hpp"
 #include "../shapes/shapes.hpp"
@@ -41,6 +42,10 @@ void TerminalRenderer::renderString(Point pos, std::string str) {
 }
 
 void TerminalRenderer::display() {
+    std::clock_t start;
+    double duration;
+
+    start = std::clock();
     COORD cur = {0, 0};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cur);
 
@@ -51,8 +56,13 @@ void TerminalRenderer::display() {
             buffer += a;
         }
     }
-    std::cout << buffer;
+    
+    std::fwrite(buffer.c_str(), 1, w * h , stdout);
     clearBuffer();
+
+    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+
+    std::cout<<"printf: "<< duration <<'\n';
 }
 
 void TerminalRenderer::clearBuffer() {
