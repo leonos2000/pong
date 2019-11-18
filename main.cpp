@@ -24,8 +24,17 @@ int main() {
     Pong pong(x, y);
 
     hideCursor();
-
     std::ios::sync_with_stdio(false);
+
+
+    std::Timer tHello;
+    tHello.start(chrono::milliseconds(1000), []{
+        stD::cout << "Hello!" << endl;
+    });
+
+    this_thread::sleep_for(chrono::seconds(2));
+    tHello.stop();
+
 
     auto counter = 0;
     
