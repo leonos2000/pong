@@ -37,14 +37,22 @@ Pong::Pong(int ww, int hh) : TerminalRenderer(ww, hh), w(ww), h(hh) {
     // std::cin >> t;
 }
 
-void Pong::game() {
-    mvBall();
-    renderPoint(ball);
-    renderRect(p1);
-    renderRect(p2);
-    display();
+int Pong::game() {
+    int endGame = mvBall();
+    if (endGame == 0) {
+        renderPoint(ball);
+        renderRect(p1);
+        renderRect(p2);
+        display();
+        return 0;
+    } else {
+        return endGame;
+    }
 }
 
+void Pong::mvP1() {
+    p1.safeTranslation(0, ball.y - (p1.p2.y - p1.p1.y) - p1.p1.y, gameBox);
+}
 void Pong::mvP1(bool upDown) {
     if (upDown) {
         if (p1.p1.y - 1 >= 0)
@@ -54,10 +62,9 @@ void Pong::mvP1(bool upDown) {
     }
 }
 
-void Pong::mvP1() {
-    p1.safeTranslation(0, ball.y - (p1.p2.y - p1.p1.y) - p1.p1.y, gameBox);
+void Pong::mvP2() {
+    p2.safeTranslation(0, ball.y - (p2.p2.y - p2.p1.y) - p2.p1.y, gameBox);
 }
-
 void Pong::mvP2(bool upDown) {
     if (upDown) {
         if (p2.p1.y - 1 >= 0)
@@ -67,7 +74,7 @@ void Pong::mvP2(bool upDown) {
     }
 }
 
-void Pong::mvBall() {
+int Pong::mvBall() {
     switch (ball.safeTranslation(mvBallx, mvBally, ballBox)) {
         case 1:
             mvBally = 1;
@@ -76,18 +83,25 @@ void Pong::mvBall() {
             mvBally = -1;
             break;
         case 3:
-            mvBallx = 1;
+            if (p1.p1.y <= ball.y && p1.p2.y >= ball.y ) {
+                mvBallx = 1;
+            } else {
+                renderString(Point(10, 10), "GAME\nOVER");
+                display();
+                return 1;
+            }
             break;
         case 4:
             if (p2.p1.y <= ball.y && p2.p2.y >= ball.y ) {
                 mvBallx = -1;
             } else {
-                renderString(Point(10, 10), "TESTOWY\nSTRING\nOK?");
+                renderString(Point(10, 10), "GAME\nOVER");
                 display();
-                while(1);
+                return 2;
             }
             break;
         default:
             break;
     }
+    return 0;
 }
