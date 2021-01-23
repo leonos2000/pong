@@ -2,6 +2,7 @@
 #define TERMINALRENDERER_HPP
 
 #include <vector>
+#include <ctime>
 
 #include "../shapes/shapes.hpp"
 
@@ -17,6 +18,8 @@ public:
 
 private:
     int w, h;
+    double fps;
+    std::clock_t lastFrame;
     Rect renderBox;
     std::vector<std::vector<char>> mapBuffer;
 

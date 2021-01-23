@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <windows.h>
+#include <ctime>
+#include <string>
 
 #include "terminalRenderer.hpp"
 #include "../shapes/shapes.hpp"
@@ -10,6 +12,8 @@ TerminalRenderer::TerminalRenderer(int ww, int hh) : w(ww), h(hh) {
     mapBuffer = std::vector<std::vector<char>>(h, std::vector<char>(w));
 
     renderBox = Rect(0, 0, w, h);
+
+    lastFrame = std::clock();
 }
 
 
@@ -41,6 +45,15 @@ void TerminalRenderer::renderString(Point pos, std::string str) {
 }
 
 void TerminalRenderer::display() {
+
+    /** display fps **/
+    auto duration = ( std::clock() - lastFrame) / (double) CLOCKS_PER_SEC;
+    lastFrame = std::clock();
+    fps = 1 / duration;
+
+    renderString(Point(renderBox.p1.x, renderBox.p2.y - 1), std::to_string((int) fps) + " fps");
+
+
     COORD cur = {0, 0};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cur);
 
@@ -51,8 +64,10 @@ void TerminalRenderer::display() {
             buffer += a;
         }
     }
+    
     std::cout << buffer;
     clearBuffer();
+
 }
 
 void TerminalRenderer::clearBuffer() {
