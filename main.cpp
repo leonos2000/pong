@@ -9,6 +9,7 @@
 #include "shapes/shapes.hpp"
 #include "renderer/terminalRenderer.hpp"
 #include "games/pong.hpp"
+#include "sort/bubble.hpp"
 
 #pragma comment(lib, "User32.lib")
 
@@ -123,7 +124,7 @@ void startGame() {
                 return;
             }
         }
-        counter ++;
+        counter++;
         Sleep(1);
     }
 }
@@ -134,10 +135,20 @@ void displayStatsFromfile() {
     games game;
 
     strFile >> game.total >> game.p1 >> game.p2;
+    cout << game.total << game.p1 << game.p2;
+
+    int scores[2] = {game.p1, game.p2};
+
+    bubbleSort(scores, (sizeof scores)/(sizeof scores[0]));
 
     cout << endl << endl << "Total games played so far: " << game.total << endl;
-    cout << "Games won by player one: " << game.p1 << endl;
-    cout << "Games won by player two: " << game.p2 << endl;
+    if (scores[0] == game.p1) {
+        cout << "Player one is the best with " << scores[0] << " winning games" << endl;
+        cout << "Second player won " << scores[1] << " games" << endl;
+    } else {
+        cout << "Second player is the best with " << scores[1] << " winning games" << endl;
+        cout << "First player won " << scores[0] << " games" << endl;
+    }
 
     strFile.close();
 }

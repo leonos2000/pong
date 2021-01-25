@@ -69,23 +69,23 @@ void Rect::translation(int tx, int ty) {
 int Rect::safeTranslation(int tx, int ty, Rect rect) {
     if (tx > 0) {   // move right
         if (p2.safeTranslation(tx, 0, rect) == 0) 
-            p1.safeTranslation(tx, 0, rect);
+            return p1.safeTranslation(tx, 0, rect);
         else return p2.safeTranslation(tx, 0, rect);
     } else {    // move left
         if (p1.safeTranslation(tx, 0, rect) == 0)
-            p2.safeTranslation(tx, 0, rect);
+            return p2.safeTranslation(tx, 0, rect);
         else return p1.safeTranslation(tx, 0, rect);
     }
     if (ty > 0) {   // move down
         if (p2.safeTranslation(0, ty, rect) == 0)
-            p1.safeTranslation(0, ty, rect);
+            return p1.safeTranslation(0, ty, rect);
         else return p2.safeTranslation(0, ty, rect);
     } else {    //move up
         if (p1.safeTranslation(0, ty, rect) == 0)
-            p2.safeTranslation(0, ty, rect);
+            return p2.safeTranslation(0, ty, rect);
         else return p1.safeTranslation(0, ty, rect);
     }
-    return 0;
+
 }
 
 bool Rect::contain(Point point) {
