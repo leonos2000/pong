@@ -3,6 +3,7 @@ CFLAGS = -std=c++2a -Wall -g
 OBJ = games/pong.cpp \
 	shapes/shapes.cpp \
 	renderer/terminalRenderer.cpp \
+	sort/bubble.cpp \
 	main.cpp
 
 
